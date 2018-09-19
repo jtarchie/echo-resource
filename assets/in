@@ -15,4 +15,7 @@ version=$(jq -r '.version // ""' < $payload)
 
 echo $version > $destination/version
 
-echo '{ "version" : {}, "metadata": []  }' >&3
+jq -n "{
+  version: $version,
+  metadata: [{name: \"timestamp\", value: now | tostring}]
+}" >&3
